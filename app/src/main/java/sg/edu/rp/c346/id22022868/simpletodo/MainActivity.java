@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> todolist = new ArrayList<String>();
     ArrayAdapter adapter;
     Spinner spinnerItem;
+    Button btnDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         btnAdd = findViewById(R.id.buttonAdd);
         btnClear = findViewById(R.id.buttonClear);
         lvTodo = findViewById(R.id.listViewTodo);
+        spinnerItem = findViewById(R.id.choice);
+        btnDelete = findViewById(R.id.buttonDelete);
 
         //Converts Arraylist objects into View objects
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, todolist);
@@ -52,6 +55,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Enhancement 1 - Delete button
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int num = Integer.parseInt(etTodo.getText().toString());
+                todolist.remove(num);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,21 +77,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-/*        spinnerItem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //Enhancement 1
+        spinnerItem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        tv.setText("Spinner Item, Yes Selected");
+                        etTodo.setHint("Type in a new task here");
+                        btnAdd.setEnabled(true);
+                        btnDelete.setEnabled(false);
                         break;
                     case 1:
-                        tv.setText("Spinner Item, No Selected");
+                        etTodo.setHint("Type in the index of the task to be removed");
+                        btnAdd.setEnabled(false);
+                        btnDelete.setEnabled(true);
                         break;
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+/*        lvTodo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                todolist.remove(position);
 
             }
         });*/
