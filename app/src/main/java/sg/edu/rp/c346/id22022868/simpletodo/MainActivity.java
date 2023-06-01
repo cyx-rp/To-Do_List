@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -59,9 +60,49 @@ public class MainActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int num = Integer.parseInt(etTodo.getText().toString());
-                todolist.remove(num);
+
+                //if list is empty and you try to delete
+                if (todolist.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "You don't have any task to remove", Toast.LENGTH_SHORT).show();
+                }
+
+                String numString = etTodo.getText().toString();
+
+                //check to ensure that string is all int
+                if (numString.matches("\\d+")) {
+
+                    int num = Integer.parseInt(numString);
+
+                    if (num >= 0 && num < todolist.size()) {
+                        todolist.remove(num);
+                    }
+
+                    else {
+                        Toast.makeText(MainActivity.this, "Wrong Index Number", Toast.LENGTH_SHORT).show();
+
+                    }
+
+
+/*                else if (num < 0 && num > count) {
+                    Toast.makeText(MainActivity.this, "Wrong index number", Toast.LENGTH_SHORT).show();
+                }*//*
+                    else {
+                        todolist.remove(num);
+                    }
+                    todolist.remove(num);*/
+                }
+
                 adapter.notifyDataSetChanged();
+
+
+
+/*                int count = 0;
+
+                for (int i = 0; i < todolist.size(); i++) {
+                    count += 1;
+                }*/
+
+
             }
         });
 
