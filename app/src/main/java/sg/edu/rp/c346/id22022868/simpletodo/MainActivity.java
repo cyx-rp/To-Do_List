@@ -40,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
         btnDelete = findViewById(R.id.buttonDelete);
 
         //Converts Arraylist objects into View objects
-        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, todolist);
+        //adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, todolist);
+        //This one changes the font of the listview
+        adapter = new ArrayAdapter<String>(this, R.layout.lvfont, todolist);
 
         //Assign adapter to listview
         lvTodo.setAdapter(adapter);
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //if list is empty and you try to delete
+                //if list is empty and you try to delete (Enhancement 2)
                 if (todolist.isEmpty()) {
                     Toast.makeText(MainActivity.this, "You don't have any task to remove", Toast.LENGTH_SHORT).show();
                 }
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
                     int num = Integer.parseInt(numString);
 
+                    //Enhancement 2
                     if (num >= 0 && num < todolist.size()) {
                         todolist.remove(num);
                     }
@@ -82,26 +85,9 @@ public class MainActivity extends AppCompatActivity {
 
                     }
 
-
-/*                else if (num < 0 && num > count) {
-                    Toast.makeText(MainActivity.this, "Wrong index number", Toast.LENGTH_SHORT).show();
-                }*//*
-                    else {
-                        todolist.remove(num);
-                    }
-                    todolist.remove(num);*/
                 }
 
                 adapter.notifyDataSetChanged();
-
-
-
-/*                int count = 0;
-
-                for (int i = 0; i < todolist.size(); i++) {
-                    count += 1;
-                }*/
-
 
             }
         });
@@ -141,15 +127,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-/*        lvTodo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                todolist.remove(position);
-
-            }
-        });*/
 
 
 
